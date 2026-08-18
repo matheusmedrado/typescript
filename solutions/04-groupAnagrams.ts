@@ -1,24 +1,27 @@
-class Solution {
-    isAnagram(s: string, t: string): boolean {
+class Solution4 {
+    /**
+     * @param {string[]} strs
+     * @return {string[][]}
+     */
+    groupAnagrams(strs: string[]): string[][] {
+        const groups = new Map<string, string[]>();
+        // here is the map where the key is a string -> array
 
-        if(s.length !== t.length){
-            return false
-        }
+        for(const str of strs){
+        //now we need to create a pattern for the strings
+        //gotta order it
+            const key = str.split("").sort().join("");
+            const group = groups.get(key);
 
-        const frequency = new Map<string, number>();
-        for (const char of s){
-            const current = frequency.get(char) ?? 0;
-            frequency.set(char, current + 1);
-        }
-        for (const char of t) {
-            const current = frequency.get(char) ?? 0;
-
-            if (current === 0) {
-            return false;
+            if (group === undefined){
+                groups.set(key, [str])
             }
-            frequency.set(char, current - 1);
-      }
-
-      return true
+            else{
+                group.push(str)
+            }
+        }
+        
+        
+        return Array.from(groups.values());
     }
 }
